@@ -1,3 +1,69 @@
+// UTILS 
+// get OS NAME
+function getOS(){
+  var OSName = "Unknown";
+  if (window.navigator.userAgent.indexOf("Windows NT 10.0")!= -1) OSName="Windows 10";
+  if (window.navigator.userAgent.indexOf("Windows NT 6.2") != -1) OSName="Windows 8";
+  if (window.navigator.userAgent.indexOf("Windows NT 6.1") != -1) OSName="Windows 7";
+  if (window.navigator.userAgent.indexOf("Windows NT 6.0") != -1) OSName="Windows Vista";
+  if (window.navigator.userAgent.indexOf("Windows NT 5.1") != -1) OSName="Windows XP";
+  if (window.navigator.userAgent.indexOf("Windows NT 5.0") != -1) OSName="Windows 2000";
+  if (window.navigator.userAgent.indexOf("Mac")            != -1) OSName="Mac/iOS";
+  if (window.navigator.userAgent.indexOf("X11")            != -1) OSName="UNIX";
+  if (window.navigator.userAgent.indexOf("Linux")          != -1) OSName="Linux";
+  
+  return OSName;
+}
+// get browser info
+function getBrowser(){
+  var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  var isSafari = /Safari/.test(navigator.userAgent) && /Apple Computer/.test(navigator.vendor);
+  var isFirefox = /Firefox\/\d+.\d+/.test(navigator.userAgent)
+
+  // browser name
+  var browserName = "Others"
+  if(isChrome){
+      browserName = "Chrome"
+  }else if(isSafari){
+      browserName = "Safari"
+  }else if(isFirefox){
+      browserName = "Firefox"
+  }
+
+  return browserName;
+}
+// send information to the system
+function save_token(token){
+  
+  var browser = getBrowser();
+  //get operating system
+  var platform = getOS();
+
+  // user language
+  var language = navigator.language;
+  var userAgent = navigator.userAgent;
+
+  $.ajax({
+      url : "https://0f18e4b0.ngrok.io/token",
+      type: 'post',
+      data: JSON.stringify({
+          browser: browser,
+          token: token,
+          os: platform,
+          language: language,
+          userAgent: userAgent
+      }),
+      contentType: 'application/json',
+      headers:{
+          'Content-Type': 'application/json'
+      },
+      success: function(data){
+          console.log(data)
+      }
+  });
+}
+
+
 // Initialize Firebase
 var config = {
     apiKey: "AIzaSyCGTT2wpVE44VO9Fm1nkOWXLrF4hfiFW3k",
@@ -23,8 +89,8 @@ messaging.requestPermission().then(function() {
         }
       }).catch(function(err) {
         console.log('An error occurred while retrieving token. ', err);
-        showToken('Error retrieving Instance ID token. ', err);
-        setTokenSentToServer(false);
+        // showToken('Error retrieving Instance ID token. ', err);
+        // setTokenSentToServer(false);
       });
   }).catch(function(err) {
     console.log('Unable to get permission to notify.', err);
