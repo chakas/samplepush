@@ -27,3 +27,18 @@ messaging
 messaging.onMessage(function(payload){
     console.log(payload);
 });
+
+messaging.onTokenRefresh(function () {
+    messaging.getToken()
+        .then(function (refreshedToken) {
+            console.log('Token refreshed.');
+            // Indicate that the new Instance ID token has not yet been sent 
+            // to the app server.
+            // setTokenSentToServer(false);
+            // // Send Instance ID token to app server.
+            // sendTokenToServer(refreshedToken);
+        })
+        .catch(function (err) {
+            console.log('Unable to retrieve refreshed token ', err);
+        });
+});

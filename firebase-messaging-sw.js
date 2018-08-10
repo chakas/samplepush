@@ -1,5 +1,5 @@
-importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/5.2.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/4.9.1/firebase-app.js')
+importScripts('https://www.gstatic.com/firebasejs/4.9.1/firebase-messaging.js')
 
 console.log("Registered SW")
 firebase.initializeApp({
@@ -12,8 +12,7 @@ messaging.setBackgroundMessageHandler(function (payload) {
     // Customize notification here
     var notificationTitle = 'Background Message Title';
     var notificationOptions = {
-        body: 'Background Message body.',
-        icon: '/firebase-logo.png'
+        body: 'Background Message body.'
     };
 
     return self.registration.showNotification(notificationTitle,
