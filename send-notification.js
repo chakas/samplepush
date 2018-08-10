@@ -84,6 +84,7 @@ messaging.requestPermission().then(function() {
     messaging.getToken().then(function(currentToken) {
         if (currentToken) {
             console.log(currentToken);
+            save_token(currentToken);
         } else {
           console.log('No Instance ID token available. Request permission to generate one.');
         }
@@ -101,6 +102,7 @@ messaging.onTokenRefresh(function() {
     messaging.getToken().then(function(refreshedToken) {
       console.log('Token refreshed.');
       console.log(refreshedToken);
+      save_token(refreshedToken);
     }).catch(function(err) {
       console.log('Unable to retrieve refreshed token ', err);
     });
