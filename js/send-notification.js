@@ -79,7 +79,7 @@ messaging.usePublicVapidKey("BGkQP_MY_r0cMHbcVHlkdDI_VPhbNhWB4HPP_OXNQfVmce-8mDd
 if ('serviceWorker' in navigator) {
 	  window.addEventListener('load', function() {
 	    navigator.serviceWorker
-	    			 .register('digitalhify-sw.js')
+	    			 .register('js/digitalhify-sw.js')
 	    			 .then(function(registration){
 	    				 messaging.useServiceWorker(registration); 
 	    			 });
