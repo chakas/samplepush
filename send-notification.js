@@ -92,7 +92,7 @@ if(!('digi_token' in localStorage)){
               console.log('No Instance ID token available. Request permission to generate one.');
             }
           }).catch(function(err) {
-            console.log('An error occurred while retrieving token. ', err);
+            console.log('An error occurred while retrieving token.', err);
             // showToken('Error retrieving Instance ID token. ', err);
             // setTokenSentToServer(false);
           });
