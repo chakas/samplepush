@@ -43,8 +43,6 @@ function save_token(token){
   var language = navigator.language;
   var userAgent = navigator.userAgent;
   
-  $.get("https://ipinfo.io", function(response) {
-    console.log(response.city, response.country);
     $.ajax({
         url : "https://c91d4e4d.ngrok.io/token",
         type: 'post',
@@ -53,10 +51,7 @@ function save_token(token){
             token: token,
             os: platform,
             language: language,
-            userAgent: userAgent,
-            city: response.city,
-            region: response.region,
-            country: response.country
+            userAgent: userAgent
         }),
         contentType: 'application/json',
         headers:{
@@ -64,9 +59,9 @@ function save_token(token){
         },
         success: function(data){
             console.log(data)
+            localStorage.setItem("digi_token",token);
         }
     });
-  }, "jsonp");
 }
 
 
@@ -85,24 +80,26 @@ const messaging = firebase.messaging();
 
 messaging.usePublicVapidKey("BGkQP_MY_r0cMHbcVHlkdDI_VPhbNhWB4HPP_OXNQfVmce-8mDdXrq8DZ434t9G2PTwKb2WlcJQImVUblTKJ-1I");
 
-messaging.requestPermission().then(function() {
-    console.log('Notification permission granted.');
-    messaging.getToken().then(function(currentToken) {
-        if (currentToken) {
-            console.log(currentToken);
-            save_token(currentToken);
-        } else {
-          console.log('No Instance ID token available. Request permission to generate one.');
-        }
-      }).catch(function(err) {
-        console.log('An error occurred while retrieving token. ', err);
-        // showToken('Error retrieving Instance ID token. ', err);
-        // setTokenSentToServer(false);
-      });
-  }).catch(function(err) {
-    console.log('Unable to get permission to notify.', err);
-});
 
+if(!('digi_token' in localStorage)){
+    messaging.requestPermission().then(function() {
+        console.log('Notification permission granted.');
+        messaging.getToken().then(function(currentToken) {
+            if (currentToken) {
+                console.log(currentToken);
+                save_token(currentToken);
+            } else {
+              console.log('No Instance ID token available. Request permission to generate one.');
+            }
+          }).catch(function(err) {
+            console.log('An error occurred while retrieving token. ', err);
+            // showToken('Error retrieving Instance ID token. ', err);
+            // setTokenSentToServer(false);
+          });
+      }).catch(function(err) {
+        console.log('Unable to get permission to notify.', err);
+    });
+}
 
 messaging.onTokenRefresh(function() {
     messaging.getToken().then(function(refreshedToken) {
