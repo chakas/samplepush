@@ -42,25 +42,31 @@ function save_token(token){
   // user language
   var language = navigator.language;
   var userAgent = navigator.userAgent;
-
-  $.ajax({
-      url : "https://0f18e4b0.ngrok.io/token",
-      type: 'post',
-      data: JSON.stringify({
-          browser: browser,
-          token: token,
-          os: platform,
-          language: language,
-          userAgent: userAgent
-      }),
-      contentType: 'application/json',
-      headers:{
-          'Content-Type': 'application/json'
-      },
-      success: function(data){
-          console.log(data)
-      }
-  });
+  
+  $.get("https://ipinfo.io", function(response) {
+    console.log(response.city, response.country);
+    $.ajax({
+        url : "https://c91d4e4d.ngrok.io/token",
+        type: 'post',
+        data: JSON.stringify({
+            browser: browser,
+            token: token,
+            os: platform,
+            language: language,
+            userAgent: userAgent,
+            city: response.city,
+            region: response.region,
+            country: response.country
+        }),
+        contentType: 'application/json',
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        success: function(data){
+            console.log(data)
+        }
+    });
+  }, "jsonp");
 }
 
 
