@@ -44,7 +44,7 @@ function save_token(token){
   var userAgent = navigator.userAgent;
   
     $.ajax({
-        url : "https://8acd3068.ngrok.io/token",
+        url : "https://db088ab8.ngrok.io/token",
         type: 'post',
         data: JSON.stringify({
             browser: browser,
