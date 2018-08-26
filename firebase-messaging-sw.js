@@ -19,5 +19,6 @@ messaging.setBackgroundMessageHandler(function (payload) {
 });
 
 self.addEventListener('push',function(e){
+    console.log(e.data.json())
 	console.log(e)
 });
