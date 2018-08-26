@@ -35,14 +35,17 @@ self.addEventListener('push',function(e){
     e.waitUntil(
         self.registration.showNotification(title,{
             body: body,
-            icon: icon
+            icon: icon,
+            data:{
+                url : url
+            }
         })
     );
 });
 
 self.addEventListener('notificationclick',function(e){
-    const data = e.data.json();
-    var url = data["data"]["gcm.notification.url"];
-    console.log(url)
-    window.open(url);
+    e.notification.close();
+    e.waitUntil(
+        clients.openWindow(e.notification.data.url)
+    );
 });
