@@ -14,7 +14,10 @@ messaging.setBackgroundMessageHandler(function (payload) {
     var notificationOptions = {
         body: 'Background Message body.'
     };
-    alert(1);
     return self.registration.showNotification(notificationTitle,
         notificationOptions);
+});
+
+self.addEventListener('push',function(e){
+	console.log(e)
 });
