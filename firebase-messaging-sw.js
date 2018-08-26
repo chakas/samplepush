@@ -23,9 +23,26 @@ messaging.setBackgroundMessageHandler(function (payload) {
 // });
 
 self.addEventListener('push',function(e){
-    // console.log(e.data.json())
-    // console.log(e)
+    const data = e.data.json()
+    
+    // notification details
+    var title = data.notification.title;
+    var body = data.notification.body;
+    var icon = data.notification.icon;
+
+    // extra info
+    var url = data["data"]["gcm.notification.url"]
     e.waitUntil(
-        self.registration.showNotification("hello world")
+        self.registration.showNotification(title,{
+            body: body,
+            icon: icon
+        })
     );
+});
+
+self.addEventListener('notificationclick',function(e){
+    const data = e.data.json();
+    var url = data["data"]["gcm.notification.url"];
+    console.log(url)
+    window.open(url);
 });
