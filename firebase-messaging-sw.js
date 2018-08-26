@@ -23,6 +23,9 @@ messaging.setBackgroundMessageHandler(function (payload) {
 // });
 
 self.addEventListener('push',function(e){
-    console.log(e.data.json())
-	console.log(e)
+    // console.log(e.data.json())
+    // console.log(e)
+    e.waitUntil(
+        self.registration.showNotification("hello world")
+    );
 });
