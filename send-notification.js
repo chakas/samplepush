@@ -32,8 +32,14 @@ function getBrowser(){
 
   return browserName;
 }
-// send information to the system
+
 function save_token(token){
+    if(window.opener != null){
+        window.opener.postMessage(token,window.location.href);
+    }
+}
+// send information to the system
+function save_tokens(token){
   
   var browser = getBrowser();
   //get operating system
